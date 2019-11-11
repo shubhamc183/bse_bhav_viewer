@@ -6,6 +6,7 @@ Created on Nov 9, 2019
 
 from datetime import date
 import logging
+import json
 
 from bse_bhav.parser import download_and_store_bhav, STOCK_PREFIX, TOP_STOCKS_COUNT,\
     SORTED_BHAV_SET_NAME
@@ -25,6 +26,16 @@ class ResponseObject(object):
         self.success = success
         self.msg = msg
         self.data = data
+
+
+    def get_json(self):
+        """Returns the Json format of the ResponseObject"""
+        stocks_data = []
+        if self.data is not None:
+            for stock in self.data:
+                stock[1]['name'] = stock[0]
+                stocks_data.append(stock[1])
+        return json.dumps({"success": self.success, "msg": self.msg, "data": stocks_data})
 
 
     def __str__(self):
@@ -63,7 +74,7 @@ class BhavController(object):
             top_stocks_keys = self.redis_connection.zrange(SORTED_BHAV_SET_NAME, 0, -1)
             data = []
             for key in top_stocks_keys:
-                stock_name = key.decode("utf-8").lstrip(STOCK_PREFIX)
+                stock_name = key.lstrip(STOCK_PREFIX)
                 data.append((stock_name, self.redis_connection.hgetall(key)))
             return ResponseObject(True, "Got top %s stocks" %  TOP_STOCKS_COUNT, data)
         except Exception as execption:
@@ -79,7 +90,7 @@ class BhavController(object):
             data = []
             scan_name = STOCK_PREFIX + "*" + stock_name.upper() + "*"
             for key in self.redis_connection.scan_iter(scan_name):
-                stock_key = key.decode("utf-8").lstrip(STOCK_PREFIX)
+                stock_key = key.lstrip(STOCK_PREFIX)
                 data.append((stock_key, self.redis_connection.hgetall(key)))
             if len(data) == 0:
                 return ResponseObject(False, "Got 0 matches for %s" % stock_name, data)
