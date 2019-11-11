@@ -16,7 +16,7 @@ def get_redis_connection():
     """
     try:
         #redis_connection = redis.from_url(os.environ.get("REDIS_URL"), charset="utf-8", decode_responses=True, db=0)
-        redis_connection = redis.Redis("localhost")
+        redis_connection = redis.Redis("localhost", charset="utf-8", decode_responses=True)
         redis_connection.ping()
         return redis_connection
     except redis.exceptions.ConnectionError as exception:
