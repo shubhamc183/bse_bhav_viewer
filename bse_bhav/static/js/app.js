@@ -32,9 +32,11 @@ $(document).ready(
 						});
 					});
 			$("#reindexStocksData").click(function() {
+				$("#reindeximage").attr("id","loadingrotation");
 				$.ajax({
 					url : "save_latest_bhav_report",
 					success : function(data, status, xhr) {
+						$("#loadingrotation").attr("id","reindeximage");
 						var json = $.parseJSON(data);
 						alert(json["msg"]);
 						if (json["success"]) {
