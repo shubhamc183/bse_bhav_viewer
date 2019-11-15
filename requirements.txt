@@ -1,3 +1,4 @@
 requests==2.20.0
 redis==3.3.11
 CherryPy==18.4.0
+Jinja2==2.10.1
