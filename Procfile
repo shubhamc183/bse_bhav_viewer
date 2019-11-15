@@ -1,1 +1,1 @@
-web: python bse_bhav/server.py
+web: sh -c 'cd ./bse_bhav/ && python server.py'
