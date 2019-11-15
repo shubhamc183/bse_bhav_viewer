@@ -9,7 +9,7 @@ import logging
 import json
 
 from bse_bhav.parser import download_and_store_bhav, STOCK_PREFIX, TOP_STOCKS_COUNT,\
-    SORTED_BHAV_SET_NAME
+    SORTED_BHAV_SET_NAME, LAST_DATE_INDEXD_KEY
 
 
 class ResponseObject(object):
@@ -87,6 +87,7 @@ class BhavController(object):
         Scans the database against a stock_name and returns the result
         """
         try:
+            stock_name = stock_name.rstrip().lstrip()
             data = []
             scan_name = STOCK_PREFIX + "*" + stock_name.upper() + "*"
             for key in self.redis_connection.scan_iter(scan_name):
@@ -99,3 +100,11 @@ class BhavController(object):
         except Exception as execption:
             logging.exception(execption)
             return ResponseObject(False, str(execption), None)
+
+
+    def get_last_date_indexed(self):
+        """
+        Gets last indexed date
+        """
+        last_date_indexed = self.redis_connection.get(LAST_DATE_INDEXD_KEY)
+        return last_date_indexed

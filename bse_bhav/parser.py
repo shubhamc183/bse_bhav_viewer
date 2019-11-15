@@ -150,5 +150,5 @@ def download_and_store_bhav(report_date, redis_connection):
         logging.warning("Flushing the database")
         redis_connection.flushdb()
         return False
-    redis_connection.set(LAST_DATE_INDEXD_KEY, report_date.strftime("%d%m%y"))
+    redis_connection.set(LAST_DATE_INDEXD_KEY, report_date.strftime("%d-%m-%y"))
     return True
