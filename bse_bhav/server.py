@@ -56,7 +56,11 @@ CONFIG = {'global': {
               'tools.staticfile.on': True,
               'tools.staticfile.filename': os.path.join(os.path.abspath(os.getcwd()), "static",
                                                         "favicon.ico")
-          }
+          },
+          '/static': {
+              'tools.staticdir.on' : True,
+              'tools.staticdir.dir' : os.path.join(os.path.abspath(os.getcwd()), "static")
+              }
          }
 
 os.path.join(os.path.abspath(os.getcwd()), "static")

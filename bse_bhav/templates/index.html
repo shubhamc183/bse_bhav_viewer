@@ -27,90 +27,32 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
-<style>
-table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
-	table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_asc:before,
-	table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_asc_disabled:before,
-	table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_desc:before,
-	table.dataTable thead .sorting_desc_disabled:after, table.dataTable thead .sorting_desc_disabled:before
-	{
-	bottom: .5em;
-}
-</style>
-
+<link rel="stylesheet" href="/static/css/app.css">
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
 <script
 	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
-<script>
-	var dtTopStocks;
-	var dtSearchStocks;
-	$(document).ready(
-			function() {
-				dtTopStocks = $('#dtTopStocks').DataTable({
-					searching : false,
-					info : false,
-					paging : false,
-					aaSorting : [ [ 6, 'des' ] ],
-				});
-				dtSearchStocks = $('#dtSearchStocks').DataTable({
-					searching : false,
-					info : true,
-					ordering : false,
-				});
-				$('.dataTables_length').addClass('bs-select');
-				$.ajax({
-					url : "get_top_stocks",
-					success : function(data, status, xhr) {
-						addStocksDataToDataTable(dtTopStocks, data);
-					}
-				});
-				$('#stockSearchButton').click(
-						function() {
-							dtSearchStocks.clear().draw();
-							$.ajax({
-								url : "get_stocks_by_name?stock_name="
-										+ $('#stockSearchInput').val(),
-								success : function(data, status, xhr) {
-									addStocksDataToDataTable(dtSearchStocks,
-											data);
-								}
-							});
-						});
-
-			});
-
-	function addStocksDataToDataTable(table, data) {
-		var json = $.parseJSON(data);
-		if (json["success"]) {
-			$.each(json["data"], function(i, item) {
-				table.row.add([ item["name"], item["code"], item["open"],
-						item["low"], item["high"], item["close"],
-						item["percentage"] ]);
-			});
-			table.draw();
-		} else {
-			alert(json["msg"]);
-		}
-	}
-</script>
+<script type="text/javascript" src="/static/js/app.js"></script>
 
 <body>
 	<div style="padding: 20px;">
 		<h1 style="text-align: center;">Zerodha BSE Bhav Copy Viewer</h1>
-		<br><h5>
+		<br>
+		<h5>
 			This app download the latest BSE Bhavcopy from the <a
 				href="https://www.bseindia.com/markets/MarketInfo/BhavCopy.aspx"
 				target="_blank">BSE website</a> extracts it and parses the csv file
 			to save all the stock values along with the columns. It also
-			calculates the percentage by taking the difference of open and close.<br><br><b>Last indexed on {{last_date_indexed}}.</b>
+			calculates the percentage by taking the difference of open and close.<br>
+			<br> <b>Last indexed on {{last_date_indexed}}.</b>
 		</h5>
 	</div>
 	<div style="width: 100%;">
 		<div style="float: left; width: 30%; padding: 20px">
 			<h1>Top 10 stocks</h1>
-			<p>This application shows top 10 stocks which has the maximum percentage change i.e difference between open and close.
+			<p>This application shows top 10 stocks which has the maximum
+				percentage change i.e difference between open and close.
 		</div>
 		<div style="float: right; width: 70%; padding: 20px">
 			<div>
