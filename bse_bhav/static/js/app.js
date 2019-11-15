@@ -31,6 +31,18 @@ $(document).ready(
 							}
 						});
 					});
+			$("#reindexStocksData").click(function() {
+				$.ajax({
+					url : "save_latest_bhav_report",
+					success : function(data, status, xhr) {
+						var json = $.parseJSON(data);
+						alert(json["msg"]);
+						if (json["success"]) {
+							location.reload();
+						}
+					}
+				});
+			});
 
 		});
 

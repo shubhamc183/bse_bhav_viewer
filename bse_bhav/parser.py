@@ -28,6 +28,7 @@ SORTED_BHAV_SET_NAME = "bhav_score"
 LAST_DATE_INDEXD_KEY = "last_date_indexed"
 TOP_STOCKS_COUNT = 10
 STOCK_PREFIX = "ticker_"
+BSE_BASE_URL = "https://www.bseindia.com/"
 
 
 class Bhav(object):
@@ -67,7 +68,7 @@ def download_bse_bhav_copy(report_date):
     sting: absolute filepath of the report
     """
     bhav_filename = "EQ%s_CSV.ZIP" % report_date.strftime("%d%m%y")
-    bhav_url = "https://www.bseindia.com/download/BhavCopy/Equity/" + bhav_filename
+    bhav_url = BSE_BASE_URL + "download/BhavCopy/Equity/" + bhav_filename
     response = requests.get(bhav_url, stream=True)
     if response.status_code != 200:
         logging.warning("Got response code %s when trying to download: %s",

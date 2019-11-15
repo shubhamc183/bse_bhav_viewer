@@ -45,13 +45,14 @@
 				target="_blank">BSE website</a> extracts it and parses the csv file
 			to save all the stock values along with the columns. It also
 			calculates the percentage by taking the difference of open and close.<br>
-			<br> <b>Last indexed on {{last_date_indexed}}.</b>
+			<br> <b>Last indexed on {{last_date_indexed}}.
+			<a id="reindexStocksData">Click to reindex <img alt="" src="/static/img/reindex.png" width="35" height="35"></a></b>
 		</h5>
 	</div>
 	<div style="width: 100%;">
 		<div style="float: left; width: 30%; padding: 20px">
-			<h1>Top 10 stocks</h1>
-			<p>This application shows top 10 stocks which has the maximum
+			<h1>Top {{top_stocks_number}} stocks</h1>
+			<p>This application shows top {{top_stocks_number}} stocks which has the maximum
 				percentage change i.e difference between open and close.
 		</div>
 		<div style="float: right; width: 70%; padding: 20px">
