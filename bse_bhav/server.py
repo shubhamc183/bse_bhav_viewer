@@ -60,7 +60,8 @@ class BseBhavApp(object):
 
 
 CONFIG = {'global': {
-    'server.socket_port': 5000
+    'server.socket_host': '0.0.0.0',
+    'server.socket_port': 80
     },
           '/favicon.ico': {
               'tools.staticfile.on': True,
