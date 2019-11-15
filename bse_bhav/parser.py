@@ -118,6 +118,8 @@ def store_bhav_in_redis(bhav_list, redis_connection):
     Stores the bhav list in the redis and also store the sorted set with maximum perentage
     under SORTED_BHAV_SET_NAME
     """
+    # flush the previous data if any
+    redis_connection.flushdb()
     for bhav in bhav_list:
         if not redis_connection.hmset(bhav.key, bhav.data):
             logging.warning("Not able to save the entry %s in Database", bhav)
