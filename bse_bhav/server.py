@@ -88,6 +88,6 @@ if __name__ == "__main__":
     if REDIS_CONNECTION is None:
         sys.exit(1)
     BHAV_CONTROLLER = BhavController(REDIS_CONNECTION)
-    #BHAV_CONTROLLER.save_latest_bhav_report()
+    BHAV_CONTROLLER.save_latest_bhav_report()
     BseBhavApp.bhav_controller = BHAV_CONTROLLER
     cherrypy.quickstart(BseBhavApp(), '/', config=CONFIG)
